@@ -1,0 +1,1 @@
+Alanine aminotransferase,Albumin,Albumin globulin ratio,Alkaline phosphatase,Aspartate aminotransferase,Blood urea nitrogen,Calcium,Carbon dioxide,Chloride,Creatine phosphokinase,Creatinine,Direct bilirubin,Glucose,Lactate dehydrogenase,Lipase,Phospholipid,Phosphorus,Potassium,Sodium,Total bilirubin,Total cholesterol,Total protein,Triglyceride,Uric acid,Gamma-glutamyltransferase

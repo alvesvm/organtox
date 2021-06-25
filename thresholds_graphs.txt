@@ -1,0 +1,39 @@
+parameter,min,max
+Alanine aminotransferase,29,75
+Albumin,3.6,4.5
+Alkaline phosphatase,212,526
+Aspartate aminotransferase,61,119
+Blood urea nitrogen,11,19
+Carbon dioxide,23,43
+Chloride,97,107
+Creatine phosphokinase,125,966
+Creatinine,0.11,0.6
+Glucose,127,209
+Lactate dehydrogenase,65,615
+Lipase,8,28
+Phosphorus,9.2,13.6
+Potassium,5.09,7.4
+Sodium,139.8,151
+Total bilirubin,0.1,0.6
+Total cholesterol,51,94
+Total protein,5.5,6.8
+Uric acid,0.4,2.4
+Absolute basophil,0,290
+Absolute eosinophil,0,290
+Absolute lymphocyte,7.86,16920
+Absolute monocyte,0,564
+Absolute segmented neutrophil,192,2745
+Basophil,0,1
+Mean corpuscular hemoglobin,30.9,40.6
+Mean corpuscular hemoglobin concentration,19.7,26.2
+Mean corpuscular volume,57.9,67.8
+Eosinophil,0,2
+Erythrocyte count,4.92,7.53
+Hematocrit,31.2,47
+Hemoglobin,12,15.4
+White blood cell count,6.11,19.5
+Lymphocyte,74,95
+Monocyte,0,4
+Neutrophil,4,21.3
+Nucleated red blood cells,0,1
+Platelet count,695,1485
