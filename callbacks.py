@@ -6,6 +6,7 @@ import plotly.graph_objects as go
 from app import app
 from dash.dependencies import Input, Output, State
 
+from results import layout_results
 from organtox_backend import *
 
 ###################################################### Callbacks ######################################################
@@ -73,7 +74,6 @@ def update_figure(source_profile, descriptor_profile, slider_value_profile, json
                           colorbar_tickmode='array',
                           colorbar_tickvals=[1, 0.75, 0.5, 0.25, 0],
                           colorbar_ticktext=['', 'Observed', '', 'Not observed', ''],
-                          # colorbar_ticklabelposition='outside top',
                           colorbar_len=0.15,
                           selector=dict(type='heatmap'))
 
@@ -114,7 +114,7 @@ def update_figure(source_tissue, descriptor_tissue, tissue, slider_value_tissue,
                          color_continuous_scale='RdYlBu',
                          symbol=f'compound_name',
                          range_color=[slider_value_tissue[0], slider_value_tissue[1]],
-                         hover_data=['value', 'value_unit', 'dose'], #control_val
+                         hover_data=['value', 'value_unit', 'dose'],
                          labels={'compound_name': 'Compound Name',
                                  'time': 'Days',
                                  'dose': 'Dose (mg/kg/day)',

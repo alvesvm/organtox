@@ -9,6 +9,7 @@ from dash.exceptions import PreventUpdate
 from app import app
 from results import layout_results
 from organtox_backend import *
+import callbacks
 
 ############################################################# Index Layout #############################################################
 
@@ -156,7 +157,7 @@ def load_output(click, smiles, mol):
             return layout_results.layout, df.to_json(date_format='iso', orient='split')
     #return print('No structures submitted yet.'), None
     else:
-        raise PreventUpdate
+        return []
 
 if __name__ == '__main__':
-    app.run_server(debug=False, dev_tools_hot_reload=False)
+    app.run_server(debug=True, dev_tools_hot_reload=False)

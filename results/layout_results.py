@@ -3,6 +3,7 @@ import dash_html_components as html
 import dash_bootstrap_components as dbc
 
 from organtox_backend import *
+import callbacks
 
 ################################################### Results Layout ###################################################
 
