@@ -12,8 +12,7 @@ from organtox_backend import *
 ###################################################### Callbacks ######################################################
 
 #### OrganTox Profile ####
-@app.callback(
-    Output('graph-profile', 'figure'),
+@app.callback(Output('graph-profile', 'figure'),
     [Input('data-source-profile', 'value'), Input('descriptor-type-profile', 'value'),
      Input('slider-profile', 'value'), Input('similarity_df', 'data')])
 def update_figure(source_profile, descriptor_profile, slider_value_profile, json_df):
@@ -24,12 +23,20 @@ def update_figure(source_profile, descriptor_profile, slider_value_profile, json
         df_2 = df_1[df_1.time == slider_value_profile]
 
         df_3 = df_2.groupby(['compound_name', 'parameter'], as_index=False).agg(
-            {'outcome': 'max', 'similarity': 'median'})
+            {'outcome': 'max', 'similarity': 'max'})
         df_4 = df_3.sort_values(by='similarity', ascending=False).head(1000)
 
         df_pivot = df_4.groupby(['compound_name', 'parameter'],
                                 sort=False,
                                 as_index=True)['outcome'].median().unstack()
+
+        df_sim_name = df_4.groupby(['compound_name'], as_index=False).agg({'similarity': 'max'})
+        df_sim_name['compound_name_sim'] = df_sim_name['compound_name'].str.cat(
+            '(' + df_sim_name['similarity'].astype(str) + ')', sep=' ')
+        df_pivot = df_sim_name.merge(df_pivot, on='compound_name', how='right')
+        df_pivot.drop(columns=['compound_name', 'similarity'], inplace=True)
+        df_pivot.set_index('compound_name_sim', inplace=True)
+
         sort_list = [k for k in param_list if k in df_pivot.columns.values]
         df_pivot = df_pivot[sort_list]
 
@@ -168,6 +175,7 @@ def update_mudra(source, tissue, slider_value, json_df):
         df0 = df[df.parameter_type == 'Weight']
         df1 = df0[df0.source.isin(source)]
         df2 = df1[df1.parameter == tissue]
+        df2 = df2.sort_values(by='similarity', ascending=False)
 
         df_morgan = df2[df2.descriptor == 'morgan'].groupby('InChIKey').first().sort_values(by='similarity',
                                                                                             ascending=False).head(slider_value)
@@ -196,18 +204,18 @@ def update_mudra(source, tissue, slider_value, json_df):
                      )
 
         fig.add_trace(go.Scatterpolargl(r = df_atom_pair.similarity,
-                                        theta = np.arange(182, 269, 87/df_avalon.shape[0]),
+                                        theta = np.arange(182, 269, 87/df_atom_pair.shape[0]),
                                         name = 'AtomPair',
                                         marker=dict(size=10, color='mediumpurple'),
-                                        customdata=df_avalon['compound_name']
+                                        customdata=df_atom_pair['compound_name']
                                        )
                      )
 
         fig.add_trace(go.Scatterpolargl(r = df_avalon.similarity,
-                                        theta = np.arange(272, 359, 87/df_atom_pair.shape[0]),
+                                        theta = np.arange(272, 359, 87/df_avalon.shape[0]),
                                         name = 'Avalon',
                                         marker=dict(size=10, color = 'magenta'),
-                                        customdata=df_atom_pair['compound_name']
+                                        customdata=df_avalon['compound_name']
                                        )
                      )
 
@@ -333,6 +341,7 @@ def update_mudra(source, clinchem, slider_value, json_df):
         df0 = df[df.parameter_type == 'Clinical chemistry']
         df1 = df0[df0.source.isin(source)]
         df2 = df1[df1.parameter == clinchem]
+        df2 = df2.sort_values(by='similarity', ascending=False)
 
         df_morgan = df2[df2.descriptor == 'morgan'].groupby('InChIKey').first().sort_values(by='similarity',
                                                                                             ascending=False).head(slider_value)
@@ -362,18 +371,18 @@ def update_mudra(source, clinchem, slider_value, json_df):
                      )
 
         fig.add_trace(go.Scatterpolargl(r = df_atom_pair.similarity,
-                                        theta = np.arange(182, 269, 87/df_avalon.shape[0]),
+                                        theta = np.arange(182, 269, 87/df_atom_pair.shape[0]),
                                         name = 'AtomPair',
                                         marker=dict(size=10, color='mediumpurple'),
-                                        customdata=df_avalon['compound_name']
+                                        customdata=df_atom_pair['compound_name']
                                        )
                      )
 
         fig.add_trace(go.Scatterpolargl(r = df_avalon.similarity,
-                                        theta = np.arange(272, 359, 87/df_atom_pair.shape[0]),
+                                        theta = np.arange(272, 359, 87/df_avalon.shape[0]),
                                         name = 'Avalon',
                                         marker=dict(size=10, color = 'magenta'),
-                                        customdata=df_atom_pair['compound_name']
+                                        customdata=df_avalon['compound_name']
                                        )
                      )
 
@@ -499,6 +508,7 @@ def update_mudra(source, hemato, slider_value, json_df):
         df0 = df[df.parameter_type == 'Hematology']
         df1 = df0[df0.source.isin(source)]
         df2 = df1[df1.parameter == hemato]
+        df2 = df2.sort_values(by='similarity', ascending=False)
 
         df_morgan = df2[df2.descriptor == 'morgan'].groupby('InChIKey').first().sort_values(by='similarity',
                                                                                             ascending=False).head(slider_value)
@@ -527,18 +537,18 @@ def update_mudra(source, hemato, slider_value, json_df):
                      )
 
         fig.add_trace(go.Scatterpolargl(r = df_atom_pair.similarity,
-                                        theta = np.arange(182, 269, 87/df_avalon.shape[0]),
+                                        theta = np.arange(182, 269, 87/df_atom_pair.shape[0]),
                                         name = 'AtomPair',
                                         marker=dict(size=10, color='mediumpurple'),
-                                        customdata=df_avalon['compound_name']
+                                        customdata=df_atom_pair['compound_name']
                                        )
                      )
 
         fig.add_trace(go.Scatterpolargl(r = df_avalon.similarity,
-                                        theta = np.arange(272, 359, 87/df_atom_pair.shape[0]),
+                                        theta = np.arange(272, 359, 87/df_avalon.shape[0]),
                                         name = 'Avalon',
                                         marker=dict(size=10, color = 'magenta'),
-                                        customdata=df_atom_pair['compound_name']
+                                        customdata=df_avalon['compound_name']
                                        )
                      )
 

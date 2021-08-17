@@ -87,7 +87,8 @@ layout_index = html.Div([
                 ]),
 
                 html.Div(children=[
-                    dash_jsme.DashJsme(id='mol-input', label='my-label', height='400px', width='580px'), html.Div(id='mol-output', style={'display':'none'})
+                    dash_jsme.DashJsme(id='mol-input', label='my-label', height='400px', width='580px'),
+                    html.Div(id='mol-output', style={'display':'none'})
                     ], style={'textAlign': 'left', 'display': 'inline-block', 'margin-bottom': 'auto'}),
 
                 html.Div(id='submit-output', style={'textAlign': 'center', 'display': 'inherit', 'margin-bottom': '1vw'}),
@@ -97,8 +98,9 @@ layout_index = html.Div([
                 ], style={'margin-bottom':'1vw'}),
 
                 html.Div(children=[
-                    dbc.Spinner(html.Div(id='loading-output'),
-                                color='secondary', size='sm', type='grow')
+                    dcc.Loading(html.Div(id='loading-output',
+                                         style={'padding-top':'1vw', 'margin-bottom': '1vw'}),
+                                type='cube', className='pv6')
                 ]),
 
                 # Store the generated df with similarity values
